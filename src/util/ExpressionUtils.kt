@@ -44,11 +44,13 @@ object ExpressionUtils {
         val output = StringBuilder()
         val operators = Stack<Char>()
         var i = 0
+        var lastWasOperator = false // 연산자 바로 뒤에 위치하는지 확인
 
         while (i < expression.length) {
             val c = expression[i]
 
             if (c.isDigit()) {
+                lastWasOperator = false
                 while (i < expression.length && expression[i].isDigit()) {
                     output.append(expression[i])
                     i++
@@ -59,28 +61,27 @@ object ExpressionUtils {
                 i++
             } else if (c == ')') {
                 while (operators.peek() != '(') {
-                    output.append(operators.pop())
-                    output.append(' ')
+                    output.append(operators.pop()).append(' ')
                 }
                 operators.pop()
                 i++
             } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
-                if (c == '-' && (i == 0 || expression[i-1] == '(' || !expression[i-1].isDigit() && expression[i-1] != ')')) {
+                if (c == '-' && (i == 0 || lastWasOperator)) {
                     output.append("0 ")
                 }
-                while (!operators.isEmpty() && priority(operators.peek()) >= priority(c)) {
-                    output.append(operators.pop())
-                    output.append(' ')
+                while (!operators.isEmpty() && !lastWasOperator && priority(operators.peek()) >= priority(c)) {
+                    output.append(operators.pop()).append(' ')
                 }
                 operators.push(c)
+                lastWasOperator = true
                 i++
             } else {
                 i++
             }
         }
+
         while (!operators.isEmpty()) {
-            output.append(operators.pop())
-            output.append(' ')
+            output.append(operators.pop()).append(' ')
         }
         return output.toString()
     }
