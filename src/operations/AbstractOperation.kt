@@ -1,5 +1,5 @@
 package operations
 
 abstract class AbstractOperation {
-    abstract fun calc(a: Int, b: Int): Int
+    abstract fun calc(a: Long, b: Long): Long
 }

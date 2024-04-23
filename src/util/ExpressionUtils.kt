@@ -17,7 +17,7 @@ object ExpressionUtils {
         }
     }
 
-    fun calculateOperation(a: Int, b: Int, op: Char): Int {
+    fun calculateOperation(a: Long, b: Long, op: Char): Long {
         val add = AddOperation()
         val subtract = SubtractOperation()
         val multiply = MultiplyOperation()
@@ -85,17 +85,17 @@ object ExpressionUtils {
         return output.toString()
     }
 
-    fun calculatePostfix(postfix: String): Int {
-        val stack = Stack<Int>()
+    fun calculatePostfix(postfix: String): Long {
+        val stack = Stack<Long>()
         var i = 0
 
         while (i < postfix.length) {
             val c = postfix[i]
 
             if (c.isDigit()) {
-                var num = 0
-                while (i < postfix.length && postfix[i].isDigit()) {    // 숫자가 끝나고 공백 만나면 스택에 넣어
-                    num = num * 10 + (postfix[i] - '0')
+                var num: Long = 0
+                while (i < postfix.length && postfix[i].isDigit()) {
+                    num = num * 10 + (postfix[i] - '0').toLong()
                     i++
                 }
                 stack.push(num)

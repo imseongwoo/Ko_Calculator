@@ -1,7 +1,7 @@
 import operations.AbstractOperation
 
 class Calculator(private val operation: AbstractOperation) {
-    fun calc(a: Int, b: Int) : Int {
+    fun calc(a: Long, b: Long) : Long {
         return operation.calc(a, b)
     }
 }
