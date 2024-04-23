@@ -65,6 +65,9 @@ object ExpressionUtils {
                 operators.pop()
                 i++
             } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
+                if (c == '-' && (i == 0 || expression[i-1] == '(' || !expression[i-1].isDigit() && expression[i-1] != ')')) {
+                    output.append("0 ")
+                }
                 while (!operators.isEmpty() && priority(operators.peek()) >= priority(c)) {
                     output.append(operators.pop())
                     output.append(' ')
